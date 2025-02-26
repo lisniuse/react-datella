@@ -1,0 +1,209 @@
+.date-range-picker-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.date-range-picker {
+  background: white;
+  border-radius: 12rem;
+  padding: 20rem;
+  width: 90%;
+  max-width: 375rem;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16rem 0;
+
+    .month-year {
+      font-size: 16rem;
+      font-weight: bold;
+      color: #000;
+    }
+
+    .navigation {
+      display: flex;
+      gap: 8rem;
+
+      .nav-button {
+        width: 24rem;
+        height: 24rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-size: 18rem;
+        color: #000;
+        padding: 0;
+
+        &:hover {
+          background-color: #f5f5f5;
+          border-radius: 4rem;
+        }
+
+        &.disabled {
+          color: #ccc;
+          cursor: not-allowed;
+          
+          &:hover {
+            background-color: transparent;
+          }
+        }
+      }
+    }
+  }
+
+  .weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 8rem;
+
+    .weekday {
+      text-align: center;
+      font-size: 14rem;
+      color: #000;
+      font-weight: bold;
+      padding: 4rem 0;
+    }
+  }
+
+  .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0; // 移除间隙
+
+    .day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14rem;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+
+      &.selected {
+        position: relative;
+        z-index: 2;
+        color: white;
+        
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          background-color: #EAEAF6;
+          z-index: -1;
+          width: 50%;
+          opacity: 0;
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 100%;
+          height: 100%;
+          background-color: #46258D;
+          border-radius: 50%;
+          z-index: -1;
+        }
+      }
+
+      &.start-date, &.end-date {
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          background-color: #EAEAF6;
+          z-index: -1;
+          width: 50%;
+          opacity: 0;
+        }
+      }
+
+      &.start-date.has-range::before {
+        right: 0;
+        opacity: 1;
+      }
+
+      &.end-date.has-range::before {
+        left: 0;
+        opacity: 1;
+      }
+
+      &.start-date::before {
+        right: 0;
+      }
+
+      &.end-date::before {
+        left: 0;
+      }
+
+      &.in-range {
+        background-color: #EAEAF6;
+      }
+
+      &.other-month {
+        color: #ccc;
+      }
+
+      &.selected {
+        background-color: #46258D !important;
+        color: white;
+        border-radius: 100%; // 确保选中状态也是方形
+      }
+
+      &.in-range {
+        background-color: #EAEAF6;
+      }
+
+      &:hover:not(.disabled) {  // 修改这里，只在非禁用状态下应用 hover 效果
+        background-color: #f5f5f5;
+      }
+    }
+  }
+
+  .footer {
+    margin-top: 16rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12rem;
+
+    button {
+      padding: 8rem 16rem;
+      border: none;
+      border-radius: 4rem;
+      font-size: 14rem;
+      cursor: pointer;
+
+      &:first-child {
+        background: #f5f5f5;
+      }
+
+      &:last-child {
+        background: #46258D;
+        color: white;
+
+        &.disabled {
+          background: #ccc;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}
