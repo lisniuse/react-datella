@@ -4,7 +4,19 @@ import './index.scss';
 import ChevronLeftIcon from '../Icons/ChevronLeftIcon';
 import ChevronRightIcon from '../Icons/ChevronRightIcon';
 
-const DateRangePicker = ({ visible, onClose, onConfirm, defaultValue }) => {
+const DateRangePicker = ({ 
+  visible, 
+  onClose, 
+  onConfirm, 
+  defaultValue,
+  monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ],
+  weekDays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+  cancelText = 'Cancel',
+  confirmText = 'Confirm'
+}) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedRange, setSelectedRange] = useState([null, null]);
 
@@ -53,11 +65,6 @@ const DateRangePicker = ({ visible, onClose, onConfirm, defaultValue }) => {
 
     return days;
   };
-  // 添加月份名称数组
-  const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
 
   // 添加判断是否为开始或结束日期的函数
   const isStartDate = (date) => {
@@ -118,8 +125,6 @@ const DateRangePicker = ({ visible, onClose, onConfirm, defaultValue }) => {
     }
   };
 
-  const weekDays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
-
   if (!visible) return null;
 
   return (
@@ -169,13 +174,13 @@ const DateRangePicker = ({ visible, onClose, onConfirm, defaultValue }) => {
           ))}
         </div>
         <div className="footer">
-          <button onClick={onClose}>取消</button>
+          <button onClick={onClose}>{cancelText}</button>
           <button 
             onClick={handleConfirm}
             className={!isValidRange() ? 'disabled' : ''}
             disabled={!isValidRange()}
           >
-            确定
+            {confirmText}
           </button>
         </div>
       </div>
